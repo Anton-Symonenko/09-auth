@@ -70,3 +70,17 @@ export const register = async (
   const response = await api.post<RegisterResponse>("/auth/register", data);
   return response.data;
 };
+
+interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+interface LoginResponse {
+  user: User;
+}
+
+export const login = async (data: LoginRequest): Promise<LoginResponse> => {
+  const response = await api.post<LoginResponse>("/auth/login", data);
+  return response.data;
+};
