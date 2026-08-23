@@ -1,9 +1,6 @@
-import axios from "axios";
-import type { Note, NoteTag } from "../types/note";
+import type { Note, NoteTag } from "../../types/note";
+import { api } from "./api";
 
-
-const BASE_URL = "https://notehub-public.goit.study/api";
-const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
 interface FetchNotesParams{
     page: number;
@@ -21,16 +18,9 @@ interface FetchNotesResponse {
     title: string;
     content: string;
     tag: NoteTag;
-}
+ }
 
-const api = axios.create({
-    baseURL: BASE_URL,
-    headers: {
-        Authorization: `Bearer ${token}`,
-    }
-});
-
-const Per_Page = 10;
+ const Per_Page = 10;
 
 
 
