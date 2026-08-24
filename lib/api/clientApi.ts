@@ -84,3 +84,21 @@ export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   const response = await api.post<LoginResponse>("/auth/login", data);
   return response.data;
 };
+
+export const logout = async (): Promise<void> => {
+  await api.post("/auth/logout");
+};
+
+type CheckSessionRequest = {
+  success: boolean;
+};
+
+export const checkSession = async () => {
+  const res = await api.get<CheckSessionRequest>("/auth/session");
+  return res.data.success;
+};
+
+export const getMe = async () => {
+  const { data } = await api.get<User>("/auth/me");
+  return data;
+};
