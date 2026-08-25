@@ -30,22 +30,15 @@ export async function proxy(request: NextRequest) {
           const parsed = parseSetCookie(cookieStr);
 
           if (parsed.value) {
-            cookieStore.set(parsed.name, parsed.value, parsed);
+            const { name, value, ...options } = parsed;
+            cookieStore.set(name, value, options);
           }
         }
         if (isPublicRoute) {
-          return NextResponse.redirect(new URL("/", request.url), {
-            headers: {
-              Cookie: cookieStore.toString(),
-            },
-          });
+          return NextResponse.redirect(new URL("/", request.url));
         }
         if (isPrivateRoute) {
-          return NextResponse.next({
-            headers: {
-              Cookie: cookieStore.toString(),
-            },
-          });
+          return NextResponse.next({});
         }
       }
     }
