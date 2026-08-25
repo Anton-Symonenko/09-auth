@@ -19,13 +19,7 @@ export async function POST(req: NextRequest) {
         const parsed = parseSetCookie(cookieStr);
 
         if (parsed.value) {
-          cookieStore.set(parsed.name, parsed.value, {
-            httpOnly: parsed.httpOnly,
-            secure: parsed.secure,
-            sameSite: parsed.sameSite,
-            maxAge: parsed.maxAge,
-            path: "/",
-          });
+          cookieStore.set(parsed.name, parsed.value, parsed);
         }
       }
 
