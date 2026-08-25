@@ -1,3 +1,4 @@
+import { User } from "@/types/user";
 import type { Note } from "../../types/note";
 import { api } from "./api";
 import { cookies } from "next/headers";
@@ -41,6 +42,28 @@ export const fetchNoteById = async (noteId: string): Promise<Note> => {
   const cookieStore = await cookies();
 
   const response = await api.get<Note>(`/notes/${noteId}`, {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
+
+  return response.data;
+};
+
+export const checkSession = async () => {
+  const cookieStore = await cookies();
+  const res = await api.get("/auth/session", {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
+  return res;
+};
+
+export const getMe = async (): Promise<User> => {
+  const cookieStore = await cookies();
+
+  const response = await api.get<User>("/auth/me", {
     headers: {
       Cookie: cookieStore.toString(),
     },
