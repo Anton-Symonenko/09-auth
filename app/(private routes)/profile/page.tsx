@@ -4,7 +4,23 @@ import type { Metadata } from "next";
 import css from "./ProfilePage.module.css";
 import { getMe } from "@/lib/api/serverApi";
 
-export const metadata: Metadata = {};
+export const metadata: Metadata = {
+  title: "Profile | NoteHub",
+  description: "View your NoteHub profile information",
+  openGraph: {
+    title: "Profile | NoteHub",
+    description: "View your NoteHub profile information",
+    url: "/profile",
+    images: [
+      {
+        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+        width: 1200,
+        height: 630,
+        alt: "NoteHub",
+      },
+    ],
+  },
+};
 
 export default async function Profile() {
   const user = await getMe();

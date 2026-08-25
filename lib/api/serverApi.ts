@@ -63,7 +63,7 @@ export const checkSession = async () => {
 export const getMe = async (): Promise<User> => {
   const cookieStore = await cookies();
 
-  const response = await api.get<User>("/auth/me", {
+  const response = await api.get<User>("/users/me", {
     headers: {
       Cookie: cookieStore.toString(),
     },

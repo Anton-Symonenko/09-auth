@@ -99,6 +99,21 @@ export const checkSession = async () => {
 };
 
 export const getMe = async () => {
-  const { data } = await api.get<User>("/auth/me");
+  const { data } = await api.get<User>("/users/me");
   return data;
+};
+
+interface UpdateMeRequest {
+  username: string;
+}
+
+interface UpdateMeResponse {
+  user: User;
+}
+export const updateMe = async (
+  data: UpdateMeRequest,
+): Promise<UpdateMeResponse> => {
+  const response = await api.patch<UpdateMeResponse>("/users/me", data);
+
+  return response.data;
 };
