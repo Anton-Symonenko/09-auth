@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
-import { api, ApiError } from "../../api";
 import { cookies } from "next/headers";
+import { isAxiosError } from "axios";
+
+import { api } from "../../api";
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -14,13 +16,20 @@ export async function GET() {
 
     return NextResponse.json(data);
   } catch (error) {
+    if (isAxiosError(error)) {
+      return NextResponse.json(
+        {
+          error: error.response?.data?.error ?? error.message,
+        },
+        {
+          status: error.response?.status ?? 500,
+        },
+      );
+    }
+
     return NextResponse.json(
-      {
-        error:
-          (error as ApiError).response?.data?.error ??
-          (error as ApiError).message,
-      },
-      { status: (error as ApiError).status },
+      { error: "Internal Server Error" },
+      { status: 500 },
     );
   }
 }

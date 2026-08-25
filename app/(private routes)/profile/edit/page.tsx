@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { updateMe } from "@/lib/api/clientApi";
-import type { SubmitEvent } from "react";
+import type { FormEvent } from "react";
 
 import css from "./EditProfilePage.module.css";
 import { useAuthStore } from "@/lib/store/authStore";
@@ -15,7 +15,7 @@ export default function EditProfilePage() {
   const user = useAuthStore((state) => state.user);
   const [username, setUsername] = useState(user?.username ?? "");
 
-  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -69,7 +69,7 @@ export default function EditProfilePage() {
             <button
               type="button"
               className={css.cancelButton}
-              onClick={() => router.push("/profile")}
+              onClick={() => router.back()}
             >
               Cancel
             </button>
